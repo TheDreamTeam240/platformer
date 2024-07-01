@@ -1,3 +1,11 @@
+mod server;
+
+use crate::server::Server;
+
 fn main() {
-    println!("Hello, world!");
+    let mut server : server::Server = Server::new();
+    server.init(8080);
+    server.run();
+    while (server.isRunning()) {
+    }
 }
