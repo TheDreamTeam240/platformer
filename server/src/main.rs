@@ -3,18 +3,24 @@
 use std::thread;
 use std::time::{Duration, Instant};
 
+mod server;
 mod player;
 mod platform;
 mod gamestate;
 
+use crate::server::Server;
 use gamestate::GameState;
 
 fn main() {
     let mut game_state = GameState::new();
     let target_fps = 10; // Target frame rate
     let target_frame_time = Duration::from_secs_f32(1.0 / target_fps as f32);
+  
+    let mut server : server::Server = Server::new();
+    server.init(8080);
+    server.run();
 
-    loop {
+    while (server.isRunning()) {
         let frame_start = Instant::now();
 
         // Example actions for testing purposes (replace with network input handling)
@@ -39,5 +45,5 @@ fn main() {
         // Stop player movement after updating (for testing purposes)
         game_state.stop_player(1);
         game_state.stop_player(2);
-    }
+  }
 }
